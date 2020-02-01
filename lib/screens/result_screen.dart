@@ -1,21 +1,46 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_data_weather/screens/result_screen_arguments.dart';
+import 'package:flutter_data_weather/models/weather.dart';
+import 'package:flutter_data_weather/models/weather_brain.dart';
+import 'package:flutter_data_weather/screens/search_screen.dart';
 import 'package:flutter_data_weather/tools/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_data_weather/widgets/content_card.dart';
+import 'package:flutter_data_weather/widgets/rounded_card_icon_and_text.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ResultScreen extends StatefulWidget {
-  static const routeName = '/result';
+  final latitude, longitude;
+
+  const ResultScreen({Key key, this.latitude, this.longitude})
+      : super(key: key);
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  WeatherBrain weatherBrain = WeatherBrain();
+  Weather weather = Weather();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrent(latitude: widget.latitude, longitude: widget.longitude);
+  }
+
+  void getCurrent({double latitude, double longitude}) async {
+    Weather getCurr =
+        await weatherBrain.getCurrentLocationWeather(latitude, longitude);
+    setState(() {
+      weather = getCurr;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ResultScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
-
+    print(weather.icon);
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),
@@ -29,183 +54,127 @@ class _ResultScreenState extends State<ResultScreen> {
         ),
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              MyResultCard(
-                child: Text(
-                  'Manchester',
-                  style: kCityTextStyle,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      getCurrent(
+                          latitude: widget.latitude,
+                          longitude: widget.longitude);
+                    },
+                    child: Icon(
+                      Icons.location_searching,
+                      color: Colors.black,
+                      size: 50.0,
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return SearchScreen();
+                          },
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.location_city,
+                      color: Colors.black,
+                      size: 50.0,
+                    ),
+                  ),
+                ],
               ),
-              MyResultCard(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureLow,
-                      iconColor: Colors.blue,
-                      iconSize: 50.0,
-                      label: '10.0 °C',
-                      labelSize: 14.0,
-                    ),
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.thermometerEmpty,
-                      iconColor: Colors.white,
-                      iconSize: 60.0,
-                      label: '10.0 °C',
-                      labelSize: 18.0,
-                    ),
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureHigh,
-                      iconColor: Colors.red,
-                      iconSize: 50.0,
-                      label: '10.0 °C',
-                      labelSize: 14.0,
-                    ),
-                  ],
-                ),
-              ),
-              MyResultCard(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureLow,
-                      iconColor: Colors.blue,
-                      iconSize: 40.0,
-                      label: '10.0 °C',
-                      labelSize: 10.0,
-                    ),
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureLow,
-                      iconColor: Colors.blue,
-                      iconSize: 40.0,
-                      label: '10.0 °C',
-                      labelSize: 10.0,
-                    ),
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureLow,
-                      iconColor: Colors.blue,
-                      iconSize: 40.0,
-                      label: '10.0 °C',
-                      labelSize: 10.0,
-                    ),
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureLow,
-                      iconColor: Colors.blue,
-                      iconSize: 40.0,
-                      label: '10.0 °C',
-                      labelSize: 10.0,
-                    ),
-                    MyDataCard(
-                      iconData: FontAwesomeIcons.temperatureLow,
-                      iconColor: Colors.blue,
-                      iconSize: 40.0,
-                      label: '10.0 °C',
-                      labelSize: 10.0,
-                    ),
-                  ],
-                ),
-              ),
-              MyResultCard(
+              ContentCard(
                 child: Center(
                   child: Text(
-                    'Main Description',
-                    style: TextStyle(color: Colors.white, fontSize: 30.0),
+                    weather.cityName ?? '',
+                    style:
+                        GoogleFonts.molle(fontSize: 50.0, color: Colors.white),
                   ),
                 ),
               ),
-              MyResultCard(
-                child: Icon(
-                  FontAwesomeIcons.sun,
-                  color: Colors.white,
-                  size: 100.0,
-                ),
-              ),
-              MyResultCard(
-                child: Center(
-                  child: Text(
-                    '"Small Description"',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontStyle: FontStyle.italic),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RoundedCardIconAndText(
+                    icon: FontAwesome.thermometer_empty,
+                    text: weather.minTemp.toString(),
                   ),
-                ),
+                  RoundedCardIconAndText(
+                    icon: FontAwesome.thermometer_half,
+                    text: weather.temp.toString(),
+                    backgroundColor: Colors.cyan.shade900,
+                    sizeMode: SizeMode.large,
+                  ),
+                  RoundedCardIconAndText(
+                    icon: FontAwesome.thermometer_full,
+                    text: weather.maxTemp.toString(),
+                    backgroundColor: Colors.redAccent,
+                  ),
+                ],
               ),
+              ContentCard(
+                  child: Column(
+                children: <Widget>[
+                  Text(
+                    weather.mainDescription ?? '',
+                    style: GoogleFonts.pacifico(
+                        fontSize: 30.0, color: Colors.white),
+                  ),
+                  weather.icon != null
+                      ? Image.network(
+                          'http://openweathermap.org/img/wn/${weather.icon}@2x.png')
+                      : SizedBox(),
+                  Text(
+                    weather.description ?? '',
+                    style: GoogleFonts.pacifico(
+                        fontSize: 15.0, color: Colors.white),
+                  ),
+                ],
+              )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RoundedCardIconAndText(
+                    icon: WeatherIcons.wi_flood,
+                    text: weather.seaLevel.toString(),
+                    backgroundColor: Colors.blue.shade900,
+                    sizeMode: SizeMode.small,
+                  ),
+                  RoundedCardIconAndText(
+                    icon: WeatherIcons.wi_earthquake,
+                    text: weather.groundLevel.toString(),
+                    backgroundColor: Colors.green.shade900,
+                    sizeMode: SizeMode.small,
+                  ),
+                  RoundedCardIconAndText(
+                    icon: WeatherIcons.wi_windy,
+                    text: weather.windSpeed.toString(),
+                    backgroundColor: Colors.grey.shade900,
+                    sizeMode: SizeMode.small,
+                  ),
+                  RoundedCardIconAndText(
+                    icon: WeatherIcons.wi_barometer,
+                    text: weather.pressure.toString(),
+                    backgroundColor: Colors.red.shade900,
+                    sizeMode: SizeMode.small,
+                  ),
+                  RoundedCardIconAndText(
+                    icon: WeatherIcons.wi_humidity,
+                    text: weather.humidity.toString(),
+                    backgroundColor: Colors.lightBlue.shade900,
+                    sizeMode: SizeMode.small,
+                  ),
+                ],
+              )
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MyDataCard extends StatelessWidget {
-  final double iconSize;
-  final Color iconColor;
-  final IconData iconData;
-  final String label;
-  final double labelSize;
-
-  const MyDataCard(
-      {Key key,
-      this.iconSize,
-      this.iconColor,
-      this.label,
-      this.labelSize,
-      this.iconData})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(
-          iconData,
-          color: iconColor,
-          size: iconSize,
-        ),
-        SizedBox(
-          height: 5.0,
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: labelSize,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class MyResultCard extends StatelessWidget {
-  final Widget child;
-
-  MyResultCard({@required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(width: 2.0, color: Color(0xFFFFFFFFFF)),
-              left: BorderSide(width: 2.0, color: Color(0xFFFFFFFFFF)),
-              right: BorderSide(width: 2.0, color: Color(0xFFFFFFFFFF)),
-              bottom: BorderSide(width: 2.0, color: Color(0xFFFFFFFFFF)),
-            ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Center(
-            child: child,
           ),
         ),
       ),

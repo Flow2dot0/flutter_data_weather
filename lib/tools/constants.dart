@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const String kApiKey = '&appid=f2170e9c3816808c755eb0a66b2de051';
 const String kBaseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
+const String kBaseUrlIcon = 'http://openweathermap.org/img/wn/';
 
 const TextStyle kCityTextStyle = TextStyle(
     fontSize: 50.0,

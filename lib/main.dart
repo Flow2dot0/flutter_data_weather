@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_data_weather/screens/loading_screen.dart';
 import 'package:flutter_data_weather/screens/result_screen.dart';
-import 'package:flutter_data_weather/screens/result_screen_arguments.dart';
 import 'package:flutter_data_weather/screens/search_screen.dart';
 
 void main() => runApp(MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoadingScreen(),
-        ResultScreen.routeName: (context) => ResultScreen(),
+        '/result': (context) => ResultScreen(),
         '/search': (context) => SearchScreen(),
       },
     );

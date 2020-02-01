@@ -8,6 +8,13 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('images/search_city.jpg'), fit: BoxFit.cover),
+        ),
+      ),
+    );
   }
 }

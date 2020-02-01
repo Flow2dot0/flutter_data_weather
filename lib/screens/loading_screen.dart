@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_data_weather/screens/result_screen.dart';
-import 'package:flutter_data_weather/screens/result_screen_arguments.dart';
 import 'package:flutter_data_weather/services/geolocation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -20,15 +19,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void getCurrentLocation() async {
     GeoLocation geoLocation = GeoLocation();
     await geoLocation.getCurrentLocation();
-    print(geoLocation.longitude);
-    print(geoLocation.latitude);
 
-    Navigator.pushNamed(
-      context,
-      ResultScreen.routeName,
-      arguments: ResultScreenArguments(
-          latitude: geoLocation.latitude, longitude: geoLocation.longitude),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ResultScreen(
+          latitude: geoLocation.latitude, longitude: geoLocation.longitude);
+    }));
   }
 
   @override

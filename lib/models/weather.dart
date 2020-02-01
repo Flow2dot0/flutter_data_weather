@@ -1,16 +1,22 @@
 class Weather {
+  /// Create [Weather] class
+  /// properties.fromJson : [latitude], [longitude], [temp],
+  /// [minTemp], [maxTemp], [seaLevel], [groundLevel],
+  /// [windSpeed], [conditionId], [pressure], [humidity],
+  /// [mainDescription], [description], [icon], [cityName]
+
   double latitude,
       longitude,
       temp,
-      pressure,
-      humidity,
       minTemp,
       maxTemp,
       seaLevel,
       groundLevel,
       windSpeed;
-  int conditionId;
+  int conditionId, pressure, humidity;
   String mainDescription, description, icon, cityName;
+
+  Weather();
 
   Weather.fromJson(Map json) {
     latitude = json['coord']['lat'];
@@ -23,10 +29,10 @@ class Weather {
     seaLevel = json['main']['sea_level'];
     groundLevel = json['main']['grnd_level'];
     windSpeed = json['wind']['speed'];
-    conditionId = json['weather']['id'];
-    mainDescription = json['weather']['main'];
-    description = json['weather']['description'];
-    icon = json['weather']['icon'];
+    conditionId = json['weather'][0]['id'];
+    mainDescription = json['weather'][0]['main'];
+    description = json['weather'][0]['description'];
+    icon = json['weather'][0]['icon'];
     cityName = json['name'];
   }
 }

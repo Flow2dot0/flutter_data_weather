@@ -7,11 +7,12 @@ class Networking {
 
   Networking({this.url});
 
-  void getData() async {
+  Future<Map> getData() async {
     http.Response response = await http.get(url);
     if (response.statusCode == 200) {
-      var decoded = jsonDecode(response.body);
-      print(decoded);
+      return jsonDecode(response.body);
+    } else {
+      print('error :url');
     }
   }
 }
