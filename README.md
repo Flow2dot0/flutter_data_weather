@@ -17,6 +17,10 @@ Update the pub!
 
 Run IOS/ANDROID simulator/emulator
 
+![Page 1](page1.png)
+
+![Page 2](page2.png)
+
 ## Built With
 
 * [Flutter](http://www.dropwizard.io/1.0.2/docs/) - The framework used
