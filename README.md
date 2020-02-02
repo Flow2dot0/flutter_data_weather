@@ -17,10 +17,7 @@ Update the pub!
 
 Run IOS/ANDROID simulator/emulator
 
-<p align="center">
-![Page 1](page1.png)
-![Page 2](page2.png)
-</p>
+![Page 1](page1.png) ![Page 2](page2.png)
 
 ## Built With
 
