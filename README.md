@@ -3,7 +3,7 @@
 Simple API Data Weather App built in Flutter
 
 - My primary purpose was to build widget from scratch
-- Imtegrating more POO concepts into my source code
+- Integrating more POO concepts into my source code
 
 ## Getting Started
 
