@@ -10,11 +10,12 @@ class WeatherBrain {
     Networking networking =
         Networking(url: '${kBaseUrl}lat=$latitude&lon=$longitude${kApiKey}');
     var data = await networking.getData();
-    print(Weather.fromJson(data).cityName);
     return Weather.fromJson(data);
   }
 
-  getWeatherByCityName() async {}
-
-  getWeatherIcon() async {}
+  Future<Weather> getWeatherByCityName(String cityName) async {
+    Networking networking = Networking(url: '${kBaseUrl}q=$cityName${kApiKey}');
+    var data = await networking.getData();
+    return Weather.fromJson(data);
+  }
 }

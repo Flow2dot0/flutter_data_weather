@@ -23,4 +23,21 @@ const TextStyle kLabelTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-//TODO : pensez à update ui lors du route vers result screen car les widgets font de la merde
+const InputDecoration kTextFieldInputDecoration = InputDecoration(
+  filled: true,
+  fillColor: Colors.white,
+  icon: Icon(
+    Icons.location_city,
+    color: Colors.white,
+  ),
+  hintText: 'Enter City Name',
+  hintStyle: TextStyle(
+    color: Colors.grey,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(10.0),
+    ),
+    borderSide: BorderSide.none,
+  ),
+);

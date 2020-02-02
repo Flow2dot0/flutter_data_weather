@@ -47,7 +47,7 @@ class _ResultScreenState extends State<ResultScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'images/sun.jpg',
+              'images/clouds.jpg',
             ),
             fit: BoxFit.cover,
           ),
@@ -58,7 +58,7 @@ class _ResultScreenState extends State<ResultScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
                     onPressed: () {
@@ -73,8 +73,8 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      var cityName = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
@@ -82,6 +82,17 @@ class _ResultScreenState extends State<ResultScreen> {
                           },
                         ),
                       );
+                      if (cityName != null) {
+                        try {
+                          Weather weatherData =
+                              await weatherBrain.getWeatherByCityName(cityName);
+                          setState(() {
+                            weather = weatherData;
+                          });
+                        } catch (e) {
+                          print('Incorrect cityname');
+                        }
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
