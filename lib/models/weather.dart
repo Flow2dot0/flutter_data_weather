@@ -16,6 +16,7 @@ class Weather {
   int conditionId, pressure, humidity;
   String mainDescription, description, icon, cityName;
 
+  // important for the result screen
   Weather();
 
   Weather.fromJson(Map json) {

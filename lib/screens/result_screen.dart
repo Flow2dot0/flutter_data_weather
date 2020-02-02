@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_data_weather/models/weather.dart';
 import 'package:flutter_data_weather/models/weather_brain.dart';
 import 'package:flutter_data_weather/screens/search_screen.dart';
-import 'package:flutter_data_weather/tools/constants.dart';
 import 'package:flutter_data_weather/widgets/content_card.dart';
 import 'package:flutter_data_weather/widgets/rounded_card_icon_and_text.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -40,7 +39,6 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(weather.icon);
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),
@@ -82,6 +80,8 @@ class _ResultScreenState extends State<ResultScreen> {
                           },
                         ),
                       );
+                      // get the callback
+                      // handle error
                       if (cityName != null) {
                         try {
                           Weather weatherData =

@@ -9,6 +9,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  // to get the TextField Input
   String cityName;
 
   @override

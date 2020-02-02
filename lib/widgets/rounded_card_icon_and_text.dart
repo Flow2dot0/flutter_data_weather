@@ -26,6 +26,7 @@ class RoundedCardIconAndText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // not the best way, but lazy myself mode was running
     if (sizeMode == SizeMode.small) {
       iconSize /= 1.25;
       textSize /= 1.25;
