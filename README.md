@@ -15,7 +15,7 @@ Update the pub!
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Run IOS/ANDROID simulator/emulator
 
 ## Built With
 
