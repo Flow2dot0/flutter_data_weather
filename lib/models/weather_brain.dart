@@ -10,7 +10,7 @@ class WeatherBrain {
   Future<Weather> getCurrentLocationWeather(
       double latitude, double longitude) async {
     Networking networking =
-        Networking(url: '${kBaseUrl}lat=$latitude&lon=$longitude${kApiKey}');
+        Networking(url: '${kBaseUrl}lat=$latitude&lon=$longitude${kApiKey}&units=metric');
     var data = await networking.getData();
     return Weather.fromJson(data);
   }
@@ -18,7 +18,7 @@ class WeatherBrain {
   /// args : [cityName]
   /// return : [Weather]
   Future<Weather> getWeatherByCityName(String cityName) async {
-    Networking networking = Networking(url: '${kBaseUrl}q=$cityName${kApiKey}');
+    Networking networking = Networking(url: '${kBaseUrl}q=$cityName${kApiKey}&units=metric');
     var data = await networking.getData();
     return Weather.fromJson(data);
   }
